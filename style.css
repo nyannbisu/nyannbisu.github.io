@@ -1,7 +1,7 @@
 /* ベーススタイル */
 body {
   font-family: 'Helvetica', 'Arial', sans-serif;
-  background-color: #e0f7fa; /* 水色背景 */
+  background-color: #ffffff; /* 白色背景 */
   color: #000;
   margin: 0;
   padding: 0;
@@ -9,7 +9,7 @@ body {
 }
 
 a {
-  color: #007acc;
+  color: #afeeee;
   text-decoration: none;
 }
 
