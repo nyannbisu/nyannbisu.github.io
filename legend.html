@@ -15,12 +15,41 @@
     <section id="legend">
       <h2>真レジェンド</h2>
         <h3>攻略編成表（サンプル）</h3>
-        <iframe 
-    src="https://docs.google.com/spreadsheets/d/1Hon85uZqMAEe4Od54YcJAJ7Lyb2GeF0w7ElP3eLFDcc/edit?gid=0#gid=0&range=A1:H20&widget=true&headers=false"
-    width="100%" 
-    height="400" 
-    frameborder="0">
-         </iframe>
+      <script>
+    const SHEET_ID = "1Hon85uZqMAEe4Od54YcJAJ7Lyb2GeF0w7ElP3eLFDcc"; // ←自分のIDに置き換えて
+    const SHEET_NAME = "シート1"; // シート名（変更していない場合は「シート1」）
+
+    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
+
+    fetch(url)
+      .then(res => res.text())
+      .then(data => {
+        const json = JSON.parse(data.substr(47).slice(0, -2)); // JSON以外を除去
+        const table = document.getElementById("sheet-table");
+        const thead = table.querySelector("thead");
+        const tbody = table.querySelector("tbody");
+
+        // ヘッダー行
+        const headerRow = document.createElement("tr");
+        json.table.cols.forEach(col => {
+          const th = document.createElement("th");
+          th.textContent = col.label;
+          headerRow.appendChild(th);
+        });
+        thead.appendChild(headerRow);
+
+        // データ行
+        json.table.rows.forEach(row => {
+          const tr = document.createElement("tr");
+          row.c.forEach(cell => {
+            const td = document.createElement("td");
+            td.textContent = cell ? cell.v : ""; // 空セル対策
+            tr.appendChild(td);
+          });
+          tbody.appendChild(tr);
+        });
+      });
+  </script>
         <table>
           <thead>
             <tr>
