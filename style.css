@@ -21,9 +21,9 @@ a:hover {
 header {
   background-color: #000;
   color: #fff;
-  padding: 5px;
+  padding: 0;
   text-align: center;
-  font-size: 40px;
+  font-size: 20px;
 }
 
 /* ナビゲーション */
@@ -56,6 +56,10 @@ h2 {
   margin: 0;
   padding: 10px 20px;
   font-size: 20px;
+}
+
+h3 {
+  padding: 0px 20px;
 }
 
 p {
