@@ -50,7 +50,7 @@ nav li {
 
 /* セクション全体 */
 main {
-  padding: 1em;
+  padding: 0;
 }
 
 h2 {
@@ -91,6 +91,7 @@ th {
   background-color: #ddd;
 }
 
+/* ホームへボタン */
 .back-to-home {
   text-align: center;
   margin: 20px 0;
