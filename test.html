@@ -1,38 +1,46 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>スプレッドシートデータ表示</title>
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <script type="text/javascript">
-    google.charts.load('current', {'packages':['table']});
-    google.charts.setOnLoadCallback(drawTable);
-
-    function drawTable() {
-      var query = new google.visualization.Query(
-        'https://docs.google.com/spreadsheets/d/1Hon85uZqMAEe4Od54YcJAJ7Lyb2GeF0w7ElP3eLFDcc/gviz/tq?sheet=シート1&range=A1:H20'
-      );
-      query.send(handleQueryResponse);
+  <title>スプレッドシート表示</title>
+  <style>
+    table {
+      border-collapse: collapse;
     }
-
-    function handleQueryResponse(response) {
-      if (response.isError()) {
-        alert('エラー: ' + response.getMessage());
-        return;
-      }
-
-      var data = response.getDataTable();
-      var table = new google.visualization.Table(document.getElementById('table_div'));
-      table.draw(data, {
-        showRowNumber: true,
-        width: '100%',
-        height: 'auto'
-      });
+    th, td {
+      border: 1px solid #888;
+      padding: 5px 10px;
     }
-  </script>
+  </style>
 </head>
 <body>
-  <h2>シート1のデータ（A1:H20）</h2>
-  <div id="table_div"></div>
+  <h1>Googleスプレッドシートの内容</h1>
+  <table id="sheetTable"></table>
+
+  <script>
+    // スプレッドシートのURL
+    const url = "https://docs.google.com/spreadsheets/d/1Hon85uZqMAEe4Od54YcJAJ7Lyb2GeF0w7ElP3eLFDcc/gviz/tq?sheet=シート1&range=A1:H20";
+
+    // データ取得
+    fetch(url)
+      .then(res => res.text())
+      .then(rep => {
+        const jsonData = JSON.parse(rep.substring(47, rep.length - 2)); // JSONP→JSON
+        const table = document.getElementById("sheetTable");
+        const rows = jsonData.table.rows;
+
+        // 行ごとに表示
+        rows.forEach(row => {
+          const tr = document.createElement("tr");
+          row.c.forEach(cell => {
+            const td = document.createElement("td");
+            td.textContent = cell ? cell.v : ""; // null対策
+            tr.appendChild(td);
+          });
+          table.appendChild(tr);
+        });
+      });
+  </script>
 </body>
 </html>
+
