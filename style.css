@@ -68,7 +68,7 @@ th, td {
   padding: 0;
   text-align: right;
   background-color: #fefefe;
-  min-width: 30px;
+  min-width: 0;
   max-width: 30px;
   white-space: nowrap;
 }
