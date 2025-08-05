@@ -1,46 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
   <meta charset="UTF-8">
   <title>スプレッドシート表示</title>
-  <style>
-    table {
-      border-collapse: collapse;
-    }
-    th, td {
-      border: 1px solid #888;
-      padding: 5px 10px;
-    }
-  </style>
 </head>
 <body>
-  <h1>Googleスプレッドシートの内容</h1>
-  <table id="sheetTable"></table>
+  <h1>Google スプレッドシートのデータ</h1>
+  <div id="sheet-data">読み込み中...</div>
 
   <script>
-    // スプレッドシートのURL
-    const url = "https://docs.google.com/spreadsheets/d/1Hon85uZqMAEe4Od54YcJAJ7Lyb2GeF0w7ElP3eLFDcc/gviz/tq?sheet=シート1&range=A1:H20";
+    const sheetID = "1Hon85uZqMAEe4Od54YcJAJ7Lyb2GeF0w7ElP3eLFDcc";
+    const sheetName = "シート1";
+    const range = "A1:H20";
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetID}/values/${sheetName}!${range}?alt=json&key=AIzaSyDJ6bZuD8SfWpF8CSF42F80LOfGJw_I7d4`;
 
-    // データ取得
     fetch(url)
-      .then(res => res.text())
-      .then(rep => {
-        const jsonData = JSON.parse(rep.substring(47, rep.length - 2)); // JSONP→JSON
-        const table = document.getElementById("sheetTable");
-        const rows = jsonData.table.rows;
-
-        // 行ごとに表示
+      .then(response => response.json())
+      .then(data => {
+        const rows = data.values;
+        let html = "<table border='1'>";
         rows.forEach(row => {
-          const tr = document.createElement("tr");
-          row.c.forEach(cell => {
-            const td = document.createElement("td");
-            td.textContent = cell ? cell.v : ""; // null対策
-            tr.appendChild(td);
+          html += "<tr>";
+          row.forEach(cell => {
+            html += `<td>${cell}</td>`;
           });
-          table.appendChild(tr);
+          html += "</tr>";
         });
+        html += "</table>";
+        document.getElementById("sheet-data").innerHTML = html;
+      })
+      .catch(error => {
+        console.error("エラー:", error);
+        document.getElementById("sheet-data").innerText = "データの読み込みに失敗しました。";
       });
   </script>
 </body>
 </html>
-
