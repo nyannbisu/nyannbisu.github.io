@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>スプレッドシート表示テスト</title>
+
+  <!-- 共通CSS読み込み -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- 共通JS読み込み -->
+  <script src="load-sheet.js"></script>
+</head>
+<body>
+  <h1>Googleスプレッドシートの内容</h1>
+
+  <!-- 表の表示先 -->
+  <table id="sheetTable"></table>
+
+  <script>
+    // ====== 表示するシート名とセル範囲をここで指定 ======
+    // 例: loadSheet("シート名", "セル範囲", "表示先tableのid");
+    loadSheet("シート1", "A1:H20", "sheetTable");
+  </script>
+</body>
+</html>
