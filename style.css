@@ -77,6 +77,16 @@ th {
   background-color: #ddd;
 }
 
+/* ▼表1用：列ごとの幅指定 */
+.table-type1 col:nth-child(1) { width: 50px; }
+.table-type1 col:nth-child(2) { width: 100px; }
+.table-type1 col:nth-child(3) { width: 80px; }
+
+/* ▼表2用：列ごとの幅指定 */
+.table-type2 col:nth-child(1) { width: 120px; }
+.table-type2 col:nth-child(2) { width: 60px; }
+.table-type2 col:nth-child(3) { width: 200px; }
+
 /* ホームへボタン */
 .back-to-home {
   text-align: left;
